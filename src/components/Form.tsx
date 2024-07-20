@@ -82,7 +82,7 @@ const Form = () => {
         mb={1}
       />
       <FormHelperText color={"gray.800"} mb={4}>
-        Це може бути будь що ( Імʼя, номер, емайл )
+        Це може бути будь що ( Імʼя, номер, емейл )
       </FormHelperText>
       <Button
         isDisabled={isButtonDisabled}
