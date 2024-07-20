@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, ReactNode, useState } from "react";
 import {
   Button,
   FormControl,
@@ -86,7 +86,12 @@ const Form: React.FC<Props> = (props) => {
         onClick={onClick}
         mb={4}
       />
-      <FormLabel htmlFor={"id"} optionalIndicator color={"gray.800"} mb={4}>
+      <FormLabel
+        htmlFor={"id"}
+        requiredIndicator={""}
+        color={"gray.800"}
+        mb={4}
+      >
         Ідентифікатор
       </FormLabel>
       <Input
