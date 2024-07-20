@@ -24,7 +24,7 @@ function App() {
           position={"absolute"}
         />
         <Box
-          maxW={400}
+          width={400}
           p={4}
           position={"relative"}
           zIndex={1}
