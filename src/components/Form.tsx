@@ -9,9 +9,11 @@ import {
   FormHelperText,
   FormErrorIcon,
 } from "@chakra-ui/react";
+import { apiService } from "../service/apiService";
+import { SubmitData } from "../types";
 
 const Form = () => {
-  const [formValues, setFormValues] = useState({
+  const [formValues, setFormValues] = useState<SubmitData>({
     text: "",
     secret_key: "",
     id: "",
@@ -27,7 +29,9 @@ const Form = () => {
       setFormValues({ ...formValues, [type]: value });
     };
 
-  const onSubmit = async () => {};
+  const onSubmit = async () => {
+    await apiService.sendMessage(formValues);
+  };
 
   const onClick = () => {
     setError("");
@@ -70,7 +74,7 @@ const Form = () => {
         onClick={onClick}
         mb={4}
       />
-      <FormLabel htmlFor={'id'} optionalIndicator color={"gray.800"} mb={4}>
+      <FormLabel htmlFor={"id"} optionalIndicator color={"gray.800"} mb={4}>
         Ідентифікатор
       </FormLabel>
       <Input
