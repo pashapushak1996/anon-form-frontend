@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import {
   Button,
   FormControl,
@@ -12,7 +12,11 @@ import {
 import { apiService } from "../service/apiService";
 import { SubmitData } from "../types";
 
-const Form = () => {
+interface Props {
+  showModal: () => void;
+}
+
+const Form: React.FC<Props> = (props) => {
   const [formValues, setFormValues] = useState<SubmitData>({
     text: "",
     secret_key: "",
@@ -30,7 +34,15 @@ const Form = () => {
     };
 
   const onSubmit = async () => {
-    await apiService.sendMessage(formValues);
+    const { success, message } = await apiService.sendMessage(formValues);
+
+    if (success) {
+      props.showModal();
+
+      return;
+    }
+
+    setError(message);
   };
 
   const onClick = () => {

@@ -1,11 +1,21 @@
 import React from "react";
 
-import { Box, ChakraProvider, Image } from "@chakra-ui/react";
+import { Box, ChakraProvider, Image, useDisclosure } from "@chakra-ui/react";
 import Form from "./components/Form";
 
 import bgImage from "./bg_image.jpg";
+import AppModal from "./components/Modal";
 
 function App() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const showModal = () => {
+    onOpen();
+
+    setTimeout(() => {
+      onClose();
+    }, 1000);
+  };
+
   return (
     <ChakraProvider>
       <Box
@@ -32,8 +42,15 @@ function App() {
           borderRadius={4}
           boxShadow={"4px 4px 28px 3px rgba(0,0,0,0.45)"}
         >
-          <Form />
+          <Form showModal={showModal} />
         </Box>
+        <AppModal
+          isOpen={isOpen}
+          onClose={onClose}
+          onOpen={onOpen}
+          title={"Успіх"}
+          description={"Ви успішно залишили свій відгук"}
+        />
       </Box>
     </ChakraProvider>
   );

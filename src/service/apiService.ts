@@ -14,6 +14,6 @@ export const apiService = {
 
     const rawData = await rawResponse.json();
 
-    return rawData;
+    return { success: rawResponse.status === 200, message: rawData.message };
   },
 };
