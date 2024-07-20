@@ -70,10 +70,11 @@ const Form = () => {
         onClick={onClick}
         mb={4}
       />
-      <FormLabel optionalIndicator color={"gray.800"} mb={4}>
+      <FormLabel htmlFor={'id'} optionalIndicator color={"gray.800"} mb={4}>
         Ідентифікатор
       </FormLabel>
       <Input
+        id={"id"}
         boxShadow={"4px 4px 19px -4px rgba(0,0,0,0.45)"}
         color={"gray.800"}
         value={formValues.id}
