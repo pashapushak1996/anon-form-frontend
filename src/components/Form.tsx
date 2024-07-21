@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactNode, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import {
   Button,
   FormControl,
@@ -20,13 +20,13 @@ const Form: React.FC<Props> = (props) => {
   const [formValues, setFormValues] = useState<SubmitData>({
     text: "",
     secret_key: "",
-    id: "",
+    user_id: "",
   });
 
   const [error, setError] = useState("");
 
   const handleChange =
-    (type: "secret_key" | "text" | "id") =>
+    (type: "secret_key" | "text" | "user_id") =>
     (e: ChangeEvent<HTMLTextAreaElement>) => {
       const value = e.target.value;
 
@@ -98,8 +98,8 @@ const Form: React.FC<Props> = (props) => {
         id={"id"}
         boxShadow={"4px 4px 19px -4px rgba(0,0,0,0.45)"}
         color={"gray.800"}
-        value={formValues.id}
-        onChange={handleChange("id") as never}
+        value={formValues.user_id}
+        onChange={handleChange("user_id") as never}
         onClick={onClick}
         mb={1}
       />
