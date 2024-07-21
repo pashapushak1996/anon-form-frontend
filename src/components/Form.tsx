@@ -16,12 +16,10 @@ interface Props {
   showModal: () => void;
 }
 
+const initialFormState: SubmitData = { text: "", secret_key: "", user_id: "" };
+
 const Form: React.FC<Props> = (props) => {
-  const [formValues, setFormValues] = useState<SubmitData>({
-    text: "",
-    secret_key: "",
-    user_id: "",
-  });
+  const [formValues, setFormValues] = useState<SubmitData>(initialFormState);
 
   const [error, setError] = useState("");
 
@@ -38,6 +36,8 @@ const Form: React.FC<Props> = (props) => {
 
     if (success) {
       props.showModal();
+
+      setFormValues(initialFormState);
 
       return;
     }
