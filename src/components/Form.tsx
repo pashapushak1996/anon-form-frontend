@@ -13,7 +13,7 @@ import { apiService } from "../service/apiService";
 import { SubmitData } from "../types";
 
 interface Props {
-  showModal: () => void;
+  showSuccess: () => void;
 }
 
 const initialFormState: SubmitData = { text: "", secret_key: "", user_id: "" };
@@ -35,7 +35,7 @@ const Form: React.FC<Props> = (props) => {
     const { success, message } = await apiService.sendMessage(formValues);
 
     if (success) {
-      props.showModal();
+      props.showSuccess();
 
       setFormValues(initialFormState);
 

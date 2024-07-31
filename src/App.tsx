@@ -1,19 +1,14 @@
 import React from "react";
 
-import { Box, ChakraProvider, Image, useDisclosure } from "@chakra-ui/react";
+import { Box, ChakraProvider, Image, Text } from "@chakra-ui/react";
 import Form from "./components/Form";
 
 import bgImage from "./bg_image.jpg";
-import AppModal from "./components/Modal";
 
 function App() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const showModal = () => {
-    onOpen();
-
-    setTimeout(() => {
-      onClose();
-    }, 1000);
+  const [isSuccess, setIsSuccess] = React.useState(false);
+  const showSuccess = () => {
+    setIsSuccess(true);
   };
 
   return (
@@ -35,22 +30,38 @@ function App() {
         />
         <Box
           width={400}
+          height={578}
           p={4}
           position={"relative"}
           zIndex={1}
           backgroundColor={"#EEEDEB"}
           borderRadius={4}
           boxShadow={"4px 4px 28px 3px rgba(0,0,0,0.45)"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          display={"flex"}
         >
-          <Form showModal={showModal} />
+          {isSuccess ? (
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              textAlign={"center"}
+              color={"green.300"}
+            >
+              <Box fontSize="46px" fontWeight={"bold"}>
+                Успіх
+              </Box>
+              <Box fontSize="20px" fontStyle={"italic"}>
+                Ви успішно залишили свій відгук
+              </Box>
+              <Text title={"Ви успішно залишили свій відгук"} />
+            </Box>
+          ) : (
+            <Form showSuccess={showSuccess} />
+          )}
         </Box>
-        <AppModal
-          isOpen={isOpen}
-          onClose={onClose}
-          onOpen={onOpen}
-          title={"Успіх"}
-          description={"Ви успішно залишили свій відгук"}
-        />
       </Box>
     </ChakraProvider>
   );
