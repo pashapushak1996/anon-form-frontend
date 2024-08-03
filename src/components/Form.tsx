@@ -58,7 +58,8 @@ const Form: React.FC<Props> = (props) => {
     setError("");
   };
 
-  const isButtonDisabled = !formValues.text || !formValues.secret_key;
+  const isButtonDisabled =
+    !formValues.text || !formValues.secret_key || !capchaToken;
 
   return (
     <FormControl isRequired>
