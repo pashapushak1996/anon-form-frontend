@@ -8,9 +8,12 @@ import {
   Textarea,
   FormHelperText,
   FormErrorIcon,
+  Box,
 } from "@chakra-ui/react";
 import { apiService } from "../service/apiService";
 import { SubmitData } from "../types";
+import useRecaptcha from "../hooks/useRecaptcha";
+import ReCAPTCHA from "react-google-recaptcha";
 
 interface Props {
   showSuccess: () => void;
@@ -19,6 +22,7 @@ interface Props {
 const initialFormState: SubmitData = { text: "", secret_key: "", user_id: "" };
 
 const Form: React.FC<Props> = (props) => {
+  const { capchaToken, recaptchaRef, handleRecaptcha } = useRecaptcha();
   const [formValues, setFormValues] = useState<SubmitData>(initialFormState);
 
   const [error, setError] = useState("");
@@ -32,17 +36,22 @@ const Form: React.FC<Props> = (props) => {
     };
 
   const onSubmit = async () => {
-    const { success, message } = await apiService.sendMessage(formValues);
+    if (capchaToken) {
+      const { success, message } = await apiService.sendMessage(
+        formValues,
+        capchaToken,
+      );
 
-    if (success) {
-      props.showSuccess();
+      if (success) {
+        props.showSuccess();
 
-      setFormValues(initialFormState);
+        setFormValues(initialFormState);
 
-      return;
+        return;
+      }
+
+      setError(message);
     }
-
-    setError(message);
   };
 
   const onClick = () => {
@@ -106,6 +115,13 @@ const Form: React.FC<Props> = (props) => {
       <FormHelperText color={"gray.800"} mb={4}>
         Це може бути будь що ( Імʼя, номер, емейл )
       </FormHelperText>
+      <Box mb={2}>
+        <ReCAPTCHA
+          ref={recaptchaRef}
+          sitekey={process.env.REACT_APP_RECAPTCHA_SITE_TOKEN as string}
+          onChange={handleRecaptcha}
+        />
+      </Box>
       <Button
         isDisabled={isButtonDisabled}
         onClick={onSubmit}

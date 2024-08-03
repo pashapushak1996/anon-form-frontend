@@ -30,7 +30,7 @@ function App() {
         />
         <Box
           width={400}
-          height={578}
+          height={650}
           p={4}
           position={"relative"}
           zIndex={1}
