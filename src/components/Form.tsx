@@ -26,11 +26,18 @@ const Form: React.FC<Props> = (props) => {
   const [formValues, setFormValues] = useState<SubmitData>(initialFormState);
 
   const [error, setError] = useState("");
+  const [textAreaError, setTextAreaError] = useState("");
 
   const handleChange =
     (type: "secret_key" | "text" | "user_id") =>
     (e: ChangeEvent<HTMLTextAreaElement>) => {
       const value = e.target.value;
+
+      if (formValues.text.length >= 5000) {
+        setTextAreaError("Максимальна кількість символів: 5000.");
+      } else {
+        setTextAreaError("");
+      }
 
       setFormValues({ ...formValues, [type]: value });
     };
@@ -59,7 +66,7 @@ const Form: React.FC<Props> = (props) => {
   };
 
   const isButtonDisabled =
-    !formValues.text || !formValues.secret_key || !capchaToken;
+    !formValues.text || !formValues.secret_key || !capchaToken || textAreaError;
 
   return (
     <FormControl isRequired>
@@ -82,6 +89,7 @@ const Form: React.FC<Props> = (props) => {
         onClick={onClick}
         mb={1}
       />
+      <Box color={"red.500"}>{textAreaError}</Box>
       <FormHelperText color={"gray.800"} mb={4}>
         Ми цінуємо вашу думку
       </FormHelperText>
@@ -102,7 +110,7 @@ const Form: React.FC<Props> = (props) => {
         color={"gray.800"}
         mb={4}
       >
-        Ідентифікатор
+        Унікальний ідентифікатор (ім'я, номер, електронна пошта)
       </FormLabel>
       <Input
         id={"id"}
@@ -111,11 +119,8 @@ const Form: React.FC<Props> = (props) => {
         value={formValues.user_id}
         onChange={handleChange("user_id") as never}
         onClick={onClick}
-        mb={1}
+        mb={2}
       />
-      <FormHelperText color={"gray.800"} mb={4}>
-        Це може бути будь що ( Імʼя, номер, емейл )
-      </FormHelperText>
       <Box mb={2}>
         <ReCAPTCHA
           ref={recaptchaRef}
